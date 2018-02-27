@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textManMod"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.09"
+            android:gravity="bottom"
+            android:text="MANUAL MODE"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".57" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.35"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:backgroundTint="@color/defaultBlueButton"
+                    android:elevation="4dp"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textSetBPM"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".98"
+            android:backgroundTint="@color/defaultBlueButton"
+            android:gravity="bottom"
+            android:text="SET BPM YOU NEED BELOW"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_weight="1.13"
+            android:backgroundTint="@color/defaultBlueButton"
+            android:text="START"
+            android:textColor="@android:color/white">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="bottom|right"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/trackValue"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_resurces"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+                        android:cursorVisible="false"
+                        android:ems="10"
+                        android:focusable="true"
+                        android:hint="50"
+                        android:inputType="number"
+                        android:maxLength="3"
+                        android:paddingLeft="5dp"
+                        android:textAlignment="textEnd"
+                        android:textSize="36sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="bottom|left"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:paddingBottom="6dp"
+                        android:paddingLeft="6dp"
+                        android:text="bpm"
+                        android:textSize="34sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.42"
+            android:orientation="horizontal">
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_seekbar_progress"
+                android:max="100"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:progress="50"
+                android:progressDrawable="@android:color/transparent"
+                android:theme="@android:style/Widget.SeekBar"
+                android:thumb="@drawable/custom_seekbar_resources" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/btnStart15"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".28"
+            android:backgroundTint="@color/defaultBlueButton"
+            android:gravity="bottom"
+            android:text="INDICATOR"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/btnStart16"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.11">
+
+            <View
+                android:id="@+id/colored"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:alpha="0"
+                android:background="@drawable/shape_oval" />
+
+            <View
+                android:id="@+id/circle"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_circle" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/btnStart17"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_weight=".92"
+            android:backgroundTint="@color/defaultBlueButton"
+            android:orientation="horizontal"
+            android:text="START"
+            android:textColor="@android:color/white">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnStart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:alpha=".5"
+                android:backgroundTint="@color/defaultBlueButton"
+                android:enabled="false"
+                android:text="START"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.15" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".5" />
+
+        <LinearLayout
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="22dp"
+            android:layout_weight=".4"
+            android:paddingBottom="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="10dp">
+
+            <Button
+                android:id="@+id/vibration"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:alpha=".5"
+                android:background="@mipmap/ic_vibration"
+                android:enabled="true"
+                android:paddingTop="32dp"
+                android:singleLine="false"
+                android:text="VIBRATION"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+
+            <View
+
+                android:layout_width="78dp"
+                android:layout_height="78dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/flash"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:alpha=".5"
+                android:background="@mipmap/ic_flash"
+                android:enabled="true"
+                android:focusable="true"
+
+                android:nestedScrollingEnabled="false"
+                android:paddingTop="32dp"
+                android:singleLine="false"
+                android:text="FLASH"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="78dp"
+                android:layout_height="78dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/sound"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:alpha="0.5"
+                android:background="@mipmap/ic_sound"
+                android:enabled="true"
+                android:paddingTop="32dp"
+                android:singleLine="false"
+                android:text="SOUND"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.1" />
+
+    </LinearLayout>
+</RelativeLayout>
