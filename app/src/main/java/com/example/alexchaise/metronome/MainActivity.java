@@ -9,7 +9,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.media.AudioDeviceInfo;
+import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -28,13 +32,20 @@ public class MainActivity extends Activity {
     EditText trackValue;
     SeekBar seekBar;
     View colored;
+
+    private static final String ACTION_SOUND = "com.example.action.SOUND";
+    private static final String ACTION_VIBRATION = "com.example.action.VIBRATION";
+    private static final String ACTION_FLASH = "com.example.action.FLASH";
+    private static int getProgress = 50;
+
     private static final int CAMERA_REQUEST = 50;
     private View.OnClickListener modeFinderLis;
     private View.OnKeyListener onKeyLis;
     private SeekBar.OnSeekBarChangeListener seekBarLis;
-    boolean hasCameraFlash, isEnabled, isEdited, wasEdit;
-
-    Intent intent;
+    boolean isCameraPermission, isEdited, wasEdit, lastEdit;
+    boolean isOnVibration, isOnFlash, isOnSound, isOnStart;
+    private BroadcastReceiver mMessageReceiver;
+    private Intent intent;
     int pro = 50;
 
     @Override
@@ -58,17 +69,33 @@ public class MainActivity extends Activity {
         seekBar.setOnSeekBarChangeListener(seekBarLis);
         btnStart.setOnClickListener(modeFinderLis);
 
-
         intent = new Intent(getApplicationContext(), MainService.class);
 
-        hasCameraFlash = getPackageManager().
-                hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-
-        isEnabled = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+        isCameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED;
+
+
+        mMessageReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                if (intent.getBooleanExtra("setIndicator", true)) {
+                    if (colored.getAlpha() == 1) {
+                        colored.setAlpha(0.5f);
+                        colored.setAlpha(0.2f);
+                        colored.setAlpha(0);
+                        System.out.println("INDICATOR 0");
+                    } else {
+                        colored.setAlpha(1);
+                        System.out.println("INDICATOR 1");
+                    }
+                }
+            }
+        };
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("getServiceData"));
+
     }
 
     {
@@ -80,86 +107,199 @@ public class MainActivity extends Activity {
 
                 switch (v.getId()) {
                     case R.id.vibration:
-                        break;
-                    case R.id.flash:
-                        if (hasCameraFlash) {
-                            if (!isEnabled) {
-                                if (flash.getAlpha() == 0.5) {
-                                    flash.setAlpha(1);
+                        if (hasVibrator()) {
+                            if (!isOnVibration) {
+                                isOnVibration = true;
+                                setButtonOpacity(vibration);
+                                enableStart();
+                                if (isOnStart) {
+                                    if (isOnSound) {
+                                        intent.putExtra(ACTION_SOUND, "SOUND");
+                                    }
+                                    if (isOnFlash) {
+                                        intent.putExtra(ACTION_FLASH, "FLASH");
+                                    }
+                                    stopService(intent);
 
-                                    enableStart();
+                                    intent.putExtra("getProgress", getProgress);
+                                    intent.putExtra(ACTION_VIBRATION, "VIBRATION");
 
-                                    intent.putExtra("flash", true);
-
-                                    System.out.println("FLASH");
+                                    startService(intent);
 
                                 } else {
-                                    disableStart();
-                                    intent.putExtra("flash", false);
+                                    intent.putExtra(ACTION_VIBRATION, "VIBRATION");
                                 }
-
                             } else {
-                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST);
-                                break;
+                                if (!isMyServiceRunning(MainService.class)) {
+                                    isOnVibration = false;
+                                    setButtonOpacity(vibration);
+                                    disableStart(isOnSound, isOnFlash);
+                                }
                             }
                         } else {
-                            Toast.makeText(getApplicationContext(), "Flashlight doesn't supported", Toast.LENGTH_SHORT).show();
-                            break;
+                            Toast.makeText(getApplicationContext(), "Vibration doesn't supported", Toast.LENGTH_SHORT).show();
                         }
-
-                    case R.id.sound:
                         break;
-
+                    case R.id.flash:
+                        if (hasCameraFlash()) {
+                            ActivityCompat.requestPermissions(MainActivity.this,
+                                    new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST);
+                            if (!isOnFlash) {
+                                isOnFlash = true;
+                                setButtonOpacity(flash);
+                                enableStart();
+                                if (isOnStart) {
+                                    if (isOnSound) {
+                                        intent.putExtra(ACTION_SOUND, "SOUND");
+                                    }
+                                    if (isOnVibration) {
+                                        intent.putExtra(ACTION_VIBRATION, "VIBRATION");
+                                    }
+                                    stopService(intent);
+                                    intent.putExtra("getProgress", getProgress);
+                                    intent.putExtra(ACTION_FLASH, "FLASH");
+                                    startService(intent);
+                                } else {
+                                    intent.putExtra(ACTION_FLASH, "FLASH");
+                                }
+                            } else {
+                                if (!isMyServiceRunning(MainService.class)) {
+                                    isOnFlash = false;
+                                    setButtonOpacity(flash);
+                                    disableStart(isOnSound, isOnVibration);
+                                }
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Flash light doesn't supported", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case R.id.sound:
+                        if (hasSpeaker()) {
+                            if (!isOnSound) {
+                                isOnSound = true;
+                                setButtonOpacity(sound);
+                                enableStart();
+                                if (isOnStart) {
+                                    if (isOnFlash) {
+                                        intent.putExtra(ACTION_FLASH, "FLASH");
+                                    }
+                                    if (isOnVibration) {
+                                        intent.putExtra(ACTION_VIBRATION, "VIBRATION");
+                                    }
+                                    stopService(intent);
+                                    System.out.println("Before service " + getProgress);
+                                    intent.putExtra("getProgress", getProgress);
+                                    intent.putExtra(ACTION_SOUND, "SOUND");
+                                    startService(intent);
+                                } else {
+                                    intent.putExtra(ACTION_SOUND, "SOUND");
+                                }
+                            } else {
+                                if (!isMyServiceRunning(MainService.class)) {
+                                    isOnSound = false;
+                                    setButtonOpacity(sound);
+                                    disableStart(isOnVibration, isOnFlash);
+                                }
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Speaker doesn't supported", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
                     case R.id.trackValue:
-                        System.out.println("CLICK EDIT TEXT");
+                        if (isOnFlash || isOnSound || isOnVibration) {
+                            if (isOnVibration) {
+                                if (!intent.hasExtra(ACTION_VIBRATION)) {
+                                    intent.putExtra(ACTION_VIBRATION, "VIBRATION");
+                                }
+                            }
+                            if (isOnFlash) {
+                                if (!intent.hasExtra(ACTION_FLASH)) {
+                                    intent.putExtra(ACTION_FLASH, "FLASH");
+                                }
+                            }
+                            if (isOnSound) {
+                                if (!intent.hasExtra(ACTION_SOUND)) {
+                                    intent.putExtra(ACTION_SOUND, "SOUND");
+                                }
+                            }
+                        }
 
                         trackValue.setHint("");
                         trackValue.setCursorVisible(true);
                         isEdited = true;
-
-
+                        lastEdit = true;
                         break;
 
                     case R.id.btnStart:
                         if (btnStart.getText().equals("START")) {
+                            isOnStart = true;
 
+                            if (isOnVibration) {
+                                intent.putExtra(ACTION_VIBRATION, "VIBRATION");
+                            } else {
+                                intent.removeExtra(ACTION_VIBRATION);
+                            }
+                            if (isOnFlash) {
+                                intent.putExtra(ACTION_FLASH, "FLASH");
+                            } else {
+                                intent.removeExtra(ACTION_FLASH);
+                            }
+                            if (isOnSound) {
+                                intent.putExtra(ACTION_SOUND, "SOUND");
+                            } else {
+                                intent.removeExtra(ACTION_SOUND);
+                            }
 
                             if (!isMyServiceRunning(MainService.class) && !isEdited) {
-                                intent.putExtra("getProgress", String.valueOf(seekBar.getProgress()));
+                                System.out.println("Before service " + getProgress);
+                                intent.putExtra("getProgress", getProgress);
+
+
                                 trackValue.setHint(String.valueOf(seekBar.getProgress()));
+
+
                                 startService(intent);
                             }
 
                             //Manual bmp
                             if (!isMyServiceRunning(MainService.class) && isEdited) {
                                 //avoiding zero inputs
-                                if (trackValue.getText().charAt(0) == '0' ||
-                                        trackValue.getText().charAt(0) == '0' && trackValue.getText().charAt(1) == '0' ||
-                                        trackValue.getText().charAt(0) == '0' && trackValue.getText().charAt(1) == '0' && trackValue.getText().charAt(2) == '0') {
-                                    Toast.makeText(getApplicationContext(), "Please type correct value", Toast.LENGTH_LONG).show();
-                                } else {
-                                    trackValue.setCursorVisible(false);
-                                    intent.putExtra("getProgress", trackValue.getText().toString());
-                                    startService(intent);
+                                try {
+                                    if (trackValue.getText().charAt(0) == '0' ||
+                                            trackValue.getText().charAt(0) == '0' && trackValue.getText().charAt(1) == '0' ||
+                                            trackValue.getText().charAt(0) == '0' && trackValue.getText().charAt(1) == '0' && trackValue.getText().charAt(2) == '0') {
+                                        Toast.makeText(getApplicationContext(), "Type correct value", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        trackValue.setCursorVisible(false);
+
+                                        getProgress = Integer.parseInt(trackValue.getText().toString());
+                                        intent.putExtra("getProgress", getProgress);
+
+                                        startService(intent);
+                                        trackValue.setHint(String.valueOf(seekBar.getProgress()));
+                                    }
+                                } catch (IndexOutOfBoundsException e) {
+                                    Toast.makeText(getApplicationContext(), "Type correct value", Toast.LENGTH_LONG).show();
                                 }
                             }
+
                             btnStart.setText("STOP");
                         } else {
                             btnStart.setText("START");
-
+                            isOnStart = false;
                             stopService(intent);
 
                             trackValue.setCursorVisible(false);
                             trackValue.setEnabled(true);
 
-                            if (isEdited) {
+                            if (isEdited && !lastEdit) {
                                 if (trackValue.getText().length() > 0) {
                                     trackValue.setHint(trackValue.getText());
                                     trackValue.setText("");
                                 }
                             }
 
-                            isEdited = false;
+
                         }
                         break;
                 }
@@ -170,7 +310,7 @@ public class MainActivity extends Activity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
                 if (progress % 10 == 0) {
-                    trackValue.setHint((progress + ""));
+                    trackValue.setHint(progress + "");
                     pro = progress;
                 }
             }
@@ -183,8 +323,9 @@ public class MainActivity extends Activity {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 int t;
                 String s;
+                //If progress 65 it makes 70, otherwise 60
                 if (String.valueOf(seekBar.getProgress()).length() == 2) {
-                    if (Integer.parseInt(String.valueOf(String.valueOf(seekBar.getProgress()).charAt(1))) >= 5) {
+                    if (Integer.parseInt(String.valueOf(seekBar.getProgress()).charAt(1) + "") >= 5) {
                         t = Integer.parseInt(String.valueOf(seekBar.getProgress()).charAt(0) + "");
                         t++;
                         s = t + "0";
@@ -195,19 +336,26 @@ public class MainActivity extends Activity {
                         pro = Integer.parseInt(s);
                     }
                     trackValue.setText("");
+                    getProgress = pro;
                     trackValue.setHint((pro + ""));
 
-                    if (btnStart.isEnabled() && flash.getAlpha() != 0.5 && btnStart.getText() == "STOP") {
+
+                    if ((isOnFlash || isOnSound || isOnVibration) && isOnStart) {
                         if (!isMyServiceRunning(MainService.class)) {
-                            intent.putExtra("getProgress", String.valueOf(pro));
+
+                            intent.putExtra("getProgress", getProgress);
                             startService(intent);
                         } else {
                             stopService(intent);
-                            intent.putExtra("getProgress", String.valueOf(pro));
+
+                            getProgress = pro;
+                            intent.putExtra("getProgress", getProgress);
                             startService(intent);
                         }
                     }
                 }
+                isEdited = false;
+                lastEdit = false;
             }
         };
 
@@ -218,33 +366,19 @@ public class MainActivity extends Activity {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
 
-                    stopService(intent);
-                    intent.putExtra("getProgress", trackValue.getText());
-                    startService(intent);
+                    System.out.println("EDIT TEXT - ENTER");
+
+                    intent.putExtra("getProgress", getProgress);
+
                     wasEdit = true;
                     isEdited = true;
+                    lastEdit = false;
                     return true;
                 }
                 return false;
             }
         };
     }
-
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            System.out.println("CIRCLE CHANGE");
-
-            if (intent.getStringExtra("setIndicator").equals("ON")) {
-                colored.setAlpha(1);
-            } else {
-                colored.setAlpha(0.5f);
-                colored.setAlpha(0.2f);
-                colored.setAlpha(0);
-            }
-        }
-    };
 
     @Override
     public void onDestroy() {
@@ -259,9 +393,62 @@ public class MainActivity extends Activity {
         btnStart.setEnabled(true);
     }
 
-    private void disableStart() {
-        btnStart.setAlpha(0.5f);
-        btnStart.setEnabled(false);
+    private void setButtonOpacity(Button btn) {
+        if (btn.getAlpha() == 0.5f) {
+            btn.setAlpha(1);
+        } else {
+            btn.setAlpha(0.5f);
+        }
+    }
+
+    private void disableStart(boolean btnA, boolean btnB) {
+        if (btnA || btnB) {
+        } else {
+            btnStart.setAlpha(0.5f);
+            btnStart.setEnabled(false);
+        }
+
+    }
+
+    boolean hasSpeaker() {
+        PackageManager packageManager = getApplicationContext().getPackageManager();
+        AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+
+        // Check whether the device has a speaker.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Check FEATURE_AUDIO_OUTPUT to guard against false positives.
+            if (!packageManager.hasSystemFeature(PackageManager.FEATURE_AUDIO_OUTPUT)) {
+                return false;
+            }
+
+            AudioDeviceInfo[] devices = audioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS);
+            for (AudioDeviceInfo device : devices) {
+                if (device.getType() == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    boolean hasVibrator() {
+        Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        boolean hasVibrator = false;
+
+        try {
+            hasVibrator = mVibrator.hasVibrator();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return hasVibrator;
+    }
+
+    boolean hasCameraFlash() {
+
+        PackageManager packageManager = getApplicationContext().getPackageManager();
+
+        return packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
