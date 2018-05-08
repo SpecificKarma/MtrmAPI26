@@ -1,4 +1,4 @@
-package com.example.alexchaise.metronome;
+package com.gmail.specifickarma.metronome;
 
 import android.app.Service;
 import android.content.Context;
@@ -37,10 +37,8 @@ public class MainService extends Service {
     @Override
     public void onCreate() {
         es = Executors.newFixedThreadPool(1);
-        System.out.println("SERVICE STARTED");
         mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.hit);
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
     }
 
     @Override
@@ -50,8 +48,6 @@ public class MainService extends Service {
         isFlashWork = intent.hasExtra(ACTION_FLASH);
         isVibrWork = intent.hasExtra(ACTION_VIBRATION);
         isSoundWork = intent.hasExtra(ACTION_SOUND);
-
-        System.out.println("Service " + intent.getExtras().getInt("getProgress"));
 
         time = intent.getExtras().getInt("getProgress");
 
@@ -93,11 +89,11 @@ public class MainService extends Service {
                                 .sendBroadcast(toActivity);
 
                         if (isSoundWork) {
-                            System.out.println("HIT");
+//                            System.out.println("HIT");
                             mMediaPlayer.start();
                         }
                         if (isFlashWork && cameraManager != null) {
-                            System.out.println("FLASH ON");
+//                            System.out.println("FLASH ON");
                             flashLightOn(cameraManager);
                         }
                         if (isVibrWork) {
@@ -108,14 +104,14 @@ public class MainService extends Service {
                                 //deprecated in API 26
                                 v.vibrate(50);
                             }
-                            System.out.println("VIBRATION ON");
+//                            System.out.println("VIBRATION ON");
                         }
 
                         Thread.sleep(50);
-                        Log.i("PAUSE - ", t + "");
+//                        Log.i("PAUSE - ", t + "");
 
                         if (isFlashWork && cameraManager != null) {
-                            System.out.println("FLASH OFF");
+//                            System.out.println("FLASH OFF");
                             flashLightOff(cameraManager);
                         }
 
@@ -137,8 +133,6 @@ public class MainService extends Service {
             String cameraId = cameraManager.getCameraIdList()[0];
             cameraManager.setTorchMode(cameraId, true);
 
-//            isFlashWork = true;
-
         } catch (CameraAccessException e) {
         }
     }
@@ -148,7 +142,6 @@ public class MainService extends Service {
         try {
             String cameraId = cameraManager.getCameraIdList()[0];
             cameraManager.setTorchMode(cameraId, false);
-//            isFlashWork = false;
 
         } catch (CameraAccessException e) {
         }

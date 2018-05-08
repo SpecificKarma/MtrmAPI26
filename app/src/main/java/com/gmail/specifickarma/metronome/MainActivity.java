@@ -1,4 +1,4 @@
-package com.example.alexchaise.metronome;
+package com.gmail.specifickarma.metronome;
 
 
 import android.Manifest;
@@ -84,10 +84,8 @@ public class MainActivity extends Activity {
                         colored.setAlpha(0.5f);
                         colored.setAlpha(0.2f);
                         colored.setAlpha(0);
-                        System.out.println("INDICATOR 0");
                     } else {
                         colored.setAlpha(1);
-                        System.out.println("INDICATOR 1");
                     }
                 }
             }
@@ -187,7 +185,6 @@ public class MainActivity extends Activity {
                                         intent.putExtra(ACTION_VIBRATION, "VIBRATION");
                                     }
                                     stopService(intent);
-                                    System.out.println("Before service " + getProgress);
                                     intent.putExtra("getProgress", getProgress);
                                     intent.putExtra(ACTION_SOUND, "SOUND");
                                     startService(intent);
@@ -251,12 +248,10 @@ public class MainActivity extends Activity {
                             }
 
                             if (!isMyServiceRunning(MainService.class) && !isEdited) {
-                                System.out.println("Before service " + getProgress);
                                 intent.putExtra("getProgress", getProgress);
 
-
                                 trackValue.setHint(String.valueOf(seekBar.getProgress()));
-
+                                btnStart.setText("STOP");
 
                                 startService(intent);
                             }
@@ -269,21 +264,21 @@ public class MainActivity extends Activity {
                                             trackValue.getText().charAt(0) == '0' && trackValue.getText().charAt(1) == '0' ||
                                             trackValue.getText().charAt(0) == '0' && trackValue.getText().charAt(1) == '0' && trackValue.getText().charAt(2) == '0') {
                                         Toast.makeText(getApplicationContext(), "Type correct value", Toast.LENGTH_LONG).show();
+                                        isOnStart = false;
                                     } else {
                                         trackValue.setCursorVisible(false);
 
                                         getProgress = Integer.parseInt(trackValue.getText().toString());
                                         intent.putExtra("getProgress", getProgress);
-
+                                        btnStart.setText("STOP");
                                         startService(intent);
                                         trackValue.setHint(String.valueOf(seekBar.getProgress()));
                                     }
                                 } catch (IndexOutOfBoundsException e) {
                                     Toast.makeText(getApplicationContext(), "Type correct value", Toast.LENGTH_LONG).show();
+                                    isOnStart = false;
                                 }
                             }
-
-                            btnStart.setText("STOP");
                         } else {
                             btnStart.setText("START");
                             isOnStart = false;
@@ -298,8 +293,6 @@ public class MainActivity extends Activity {
                                     trackValue.setText("");
                                 }
                             }
-
-
                         }
                         break;
                 }
@@ -366,8 +359,6 @@ public class MainActivity extends Activity {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
 
-                    System.out.println("EDIT TEXT - ENTER");
-
                     intent.putExtra("getProgress", getProgress);
 
                     wasEdit = true;
@@ -383,9 +374,9 @@ public class MainActivity extends Activity {
     @Override
     public void onDestroy() {
 
-        unregisterReceiver(mMessageReceiver);
-        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver((mMessageReceiver));
 
+        super.onDestroy();
     }
 
     private void enableStart() {

@@ -1,4 +1,4 @@
-package com.example.alexchaise.metronome;
+package com.gmail.specifickarma.metronome;
 
 import org.junit.Test;
 
