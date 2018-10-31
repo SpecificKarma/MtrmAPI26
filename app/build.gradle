@@ -6,17 +6,17 @@ android {
             keyAlias 'metronome-sing-key'
             keyPassword 'metro1055'
             storePassword 'key-store-1055'
-            storeFile file('C:/keyStore/key-store.jks')
+            storeFile file('C:/Users/Administrator/Desktop/IT experience/android.keyStore/key-store.jks')
         }
     }
     compileSdkVersion 26
     defaultConfig {
         applicationId 'com.gmail.specifickarma.metronome'
-        minSdkVersion 25
-        targetSdkVersion 26
-        versionCode 1
-        versionName '1.0.0'
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionName '1.1.0'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionCode 2
     }
     buildTypes {
         release {
@@ -27,9 +27,13 @@ android {
     }
     productFlavors {
     }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
 }
 
 dependencies {
+    implementation 'com.andkulikov:transitionseverywhere:1.8.0'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
     testImplementation 'junit:junit:4.12'

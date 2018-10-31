@@ -10,29 +10,25 @@
     <application
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name="com.gmail.specifickarma.metronome.MainActivity"
+            android:name="com.gmail.specifickarma.metronome.test.ActivityMain"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
 
         <service
-            android:name="com.gmail.specifickarma.metronome.MainService"
-            android:label="Metronome Service"
+            android:name="com.gmail.specifickarma.metronome.test.ServiceMain"
+            android:label="Service"
             tools:ignore="ExtraText">
-
         </service>
-
 
     </application>
 

@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorLayer1">#191d4f</color>
+    <color name="colorLayer1Wave">#6674f2</color>
+
+    <color name="colorLayer2">#303a99</color>
+    <color name="colorOn">#fbc02d</color>
+    <color name="colorOff">#818181</color>
+
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="defaultBlueButton">#03a9f4</color>
     <color name="defaultBlueButtonPressed">#4ec3f7</color>
     <color name="defaultBlueButtonFocused">#3f51b5</color>
 
+    <color name="BLUE">#9575cd</color>
+    <color name="cancel_btn_clr">#d73f37</color>
+
+    <color name="opacity0">#00ffffff</color>
 </resources>
