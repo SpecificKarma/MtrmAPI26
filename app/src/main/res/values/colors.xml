@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="background">#eaeaea</color>
+
     <color name="colorLayer1">#191d4f</color>
     <color name="colorLayer1Wave">#6674f2</color>
 

@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -16,7 +17,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name="com.gmail.specifickarma.metronome.test.ActivityMain"
+            android:name="com.gmail.specifickarma.metronome.activities.Home"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +26,7 @@
         </activity>
 
         <service
-            android:name="com.gmail.specifickarma.metronome.test.ServiceMain"
+            android:name="com.gmail.specifickarma.metronome.services.FlashSoundLoop"
             android:label="Service"
             tools:ignore="ExtraText">
         </service>

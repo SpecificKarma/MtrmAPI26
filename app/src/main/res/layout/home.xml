@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <!--Layer 1 star, switch(s_off, s_on, f_on, f_off)-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/star_trans"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight=".1"
+            android:orientation="horizontal">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayout3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintDimensionRatio="1:5"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayout5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="7:1"
+                    app:layout_constraintStart_toEndOf="@+id/constraintLayout3" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/star"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/star_"
+                    app:layout_constraintBottom_toBottomOf="@+id/constraintLayout5"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="@+id/constraintLayout5"
+                    app:layout_constraintTop_toTopOf="@+id/constraintLayout5" />
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".63" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/switch_trans"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".14">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/switch_a"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/switch_a"
+                app:layout_constraintDimensionRatio="2.03:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/linearLayout0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintEnd_toEndOf="@+id/switch_a"
+                app:layout_constraintStart_toStartOf="@+id/switch_a"
+                app:layout_constraintTop_toTopOf="@+id/switch_a"
+                app:layout_constraintVertical_weight=".68">
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/const1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintDimensionRatio="2.22:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/s_trans"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="right"
+                    app:layout_constraintStart_toStartOf="@id/const1"
+                    app:layout_constraintEnd_toEndOf="@id/const1"
+                    app:layout_constraintTop_toTopOf="@id/const1"
+                    app:layout_constraintBottom_toBottomOf="@id/const1">
+
+                    <LinearLayout
+                        android:id="@+id/switch_l"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".56"
+                        android:orientation="horizontal"
+                        android:visibility="gone" />
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/switch_click"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".46"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/switch_off_sound"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/switch_off_sound"
+                            android:visibility="visible"/>
+                        <RelativeLayout
+                            android:id="@+id/switch_off_flash"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/switch_off_flash"
+                            android:visibility="invisible"/>
+                        <RelativeLayout
+                            android:id="@+id/switch_on"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/switch_on"
+                            android:visibility="invisible"/>
+                        <RelativeLayout
+                            android:id="@+id/switch_on_flash"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/switch_on_flash"
+                            android:visibility="invisible"/>
+                        <RelativeLayout
+                            android:id="@+id/switch_on_sound"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/switch_on_sound"
+                            android:visibility="invisible"/>
+                    </android.support.constraint.ConstraintLayout>
+
+                    <LinearLayout
+                        android:id="@+id/switch_r"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight=".56"
+                        android:visibility="visible"
+                        />
+                </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/switch_a"
+                app:layout_constraintStart_toStartOf="@+id/switch_a"
+                app:layout_constraintVertical_weight=".32">
+            </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".13" />
+    </LinearLayout>
+
+    <!--Layer 2 ramp, cursor, power-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight=".23" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/ramp_trans"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight=".5">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/ramp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/ramp"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/c_trans"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/c_off"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <Button
+                            android:id="@+id/cursor_off"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:background="@drawable/cursor_off"
+                            style="?android:attr/borderlessButtonStyle"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/c_on"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="invisible">
+
+                        <Button
+                            android:id="@+id/cursor_on"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:background="@drawable/cursor_on"
+                            style="?android:attr/borderlessButtonStyle"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </android.support.constraint.ConstraintLayout>
+                </android.support.constraint.ConstraintLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight=".20" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/power_trans"
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight=".59">
+                    <View
+                        android:id="@+id/power_off"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/power_off"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0px"
+                            android:layout_weight=".15" />
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0px"
+                            android:layout_weight=".68">
+
+                            <android.support.constraint.ConstraintLayout
+                                android:id="@+id/on"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:background="@drawable/power_on"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintDimensionRatio="1:1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <Button
+                                android:id="@+id/power"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:background="@drawable/power"
+                                style="?android:attr/borderlessButtonStyle"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintDimensionRatio="1:1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </android.support.constraint.ConstraintLayout>
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0px"
+                            android:layout_weight=".15" />
+                    </LinearLayout>
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight=".20"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </LinearLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/text_trans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/trench"
+                    android:text=" 68"
+                    android:textSize="60dp"
+                    app:layout_constraintEnd_toEndOf="@id/text_trans"
+                    app:layout_constraintHorizontal_bias="0.48"
+                    app:layout_constraintStart_toStartOf="@id/text_trans"
+                    app:layout_constraintTop_toTopOf="@id/text_trans" />
+            </android.support.constraint.ConstraintLayout>
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight=".28" />
+    </LinearLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.constraint.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/metronome_trans"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right">
+        <LinearLayout
+            android:id="@+id/metro_trans"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".3" />
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".2"
+                android:orientation="horizontal">
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/metro"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/metro_"
+                    app:layout_constraintDimensionRatio="2.12:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".43" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/nome_trans"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".4"
+                android:orientation="horizontal" />
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".2"
+                android:orientation="horizontal">
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/nome"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/nome_"
+                    app:layout_constraintDimensionRatio="2.05:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".3" >
+
+
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/vignette"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/vignette" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/trench"
+        android:text="chashchin.dev"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95" />
+</android.support.constraint.ConstraintLayout>
