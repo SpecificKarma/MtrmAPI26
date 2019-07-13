@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.gmail.specifickarma.metronome.R;
 
-public class Switch{
+public class Switch {
     private Context context;
     private LinearLayout s_trans, switch_m1, switch_m2;
     ConstraintLayout switch_click;
@@ -31,14 +31,14 @@ public class Switch{
 
         switch_m1 = ((Activity) context).findViewById(R.id.switch_l);
         switch_m2 = ((Activity) context).findViewById(R.id.switch_r);
+        switch_m1.setOnClickListener(l);
+        switch_m2.setOnClickListener(l);
         s_trans = ((Activity) context).findViewById(R.id.s_trans);
-
     }
 
 
-    public void switch_trans(boolean isPowerOn){
+    public void switch_trans(boolean isPowerOn) {
         if (isPowerOn) {
-
             TransitionManager.beginDelayedTransition(s_trans, new AutoTransition().setDuration(200));
             switch_m1.setVisibility(aBoolean ? View.VISIBLE : View.GONE);
             switch_m2.setVisibility(!aBoolean ? View.VISIBLE : View.GONE);
@@ -49,7 +49,7 @@ public class Switch{
         }
     }
 
-    public void switch_OnOff(boolean isPowerOn){
+    public void switch_OnOff(boolean isPowerOn) {
         if (aBoolean) {
             if (isPowerOn) {
                 TransitionManager.beginDelayedTransition(switch_off_sound, new AutoTransition().setDuration(200));
@@ -78,7 +78,7 @@ public class Switch{
 
 
     public void switch_mode() {
-        switch_on_sound.setVisibility(aBoolean ?  View.INVISIBLE : View.VISIBLE);
+        switch_on_sound.setVisibility(aBoolean ? View.INVISIBLE : View.VISIBLE);
         switch_on_flash.setVisibility(aBoolean ? View.VISIBLE : View.INVISIBLE);
     }
 

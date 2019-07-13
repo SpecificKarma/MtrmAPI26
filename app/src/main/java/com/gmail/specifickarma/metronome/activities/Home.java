@@ -29,7 +29,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
     private Switch switch_;
     private Star star;
     private TextView text;
-    boolean isOn = true;
+    boolean isOn;
     boolean switchOn = true;
     private FeaturesCheck fc;
 
@@ -66,20 +66,20 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                     cursor.cursor_trans();
                     switch_.switch_OnOff(power.isVisiable());
 
-                    startStopService(isOn);
                     isOn = !isOn;
+                    startStopService(isOn);
                 } else {
                     Toast.makeText(getApplicationContext(), "Device doesn't have the Speaker", Toast.LENGTH_LONG).show();
                 }
                 break;
+            case R.id.switch_l:
+                switchModes(isOn);
+                break;
+            case R.id.switch_r:
+                switchModes(isOn);
+                break;
             case R.id.switch_click:
-                if (fc.hasCameraFlash()) {
-                    switch_.switch_trans(power.isVisiable());
-                    switchOn = !switchOn;
-                    switchModeStart(switchOn);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Device doesn't have the Flashlight", Toast.LENGTH_LONG).show();
-                }
+                switchModes(isOn);
                 break;
             case R.id.star:
                 star.rateMe();
@@ -107,22 +107,31 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                 new IntentFilter("onStart"));
     }
 
+    void switchModes(boolean isOn){
+        if (isOn) {
+            if (fc.hasCameraFlash()) {
+                switch_.switch_trans(power.isVisiable());
+                switchOn = !switchOn;
+
+                if (switchOn) {
+                    sentBroadcast(sentModes.putExtra("SOUND", true));
+                    sentBroadcast(sentModes.putExtra("FLASH", false));
+                } else {
+                    sentBroadcast(sentModes.putExtra("SOUND", false));
+                    sentBroadcast(sentModes.putExtra("FLASH", true));
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Device doesn't have the Flashlight", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
     void startStopService(boolean isOn) {
         if (isOn) {
             startService(startService);
         } else {
             sentBroadcast(sentKill.putExtra("KILL", false));
             stopService(startService);
-        }
-    }
-
-    void switchModeStart(boolean switchOn) {
-        if (switchOn) {
-            sentBroadcast(sentModes.putExtra("SOUND", true));
-            sentBroadcast(sentModes.putExtra("FLASH", false));
-        } else {
-            sentBroadcast(sentModes.putExtra("SOUND", false));
-            sentBroadcast(sentModes.putExtra("FLASH", true));
         }
     }
 
