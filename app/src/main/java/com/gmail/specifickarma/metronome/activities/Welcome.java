@@ -38,7 +38,7 @@ public class Welcome {
     }
 
 
-    public void transRun(){
+    private void transRun(){
 //        aBoolean = !aBoolean;
         metro.post(new Runnable() {
             @Override
@@ -115,7 +115,7 @@ public class Welcome {
         switch_.setVisibility(aBoolean ? View.VISIBLE : View.INVISIBLE);
     }
 
-    void setVisibility(boolean v){
+    private void setVisibility(boolean v){
         star.setVisibility(v ? View.VISIBLE : View.INVISIBLE);
         ramp.setVisibility(v ? View.VISIBLE : View.INVISIBLE);
         power.setVisibility(v ? View.VISIBLE : View.INVISIBLE);

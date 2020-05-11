@@ -16,13 +16,11 @@ public class Star {
 
     public Star(Context context, View.OnClickListener l) {
         this.context = context;
-
         star = ((Activity) context).findViewById(R.id.star);
         star.setOnClickListener(l);
     }
 
     public void rateMe() {
-        System.out.println("RATE");
         try {
             context.startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse("market://details?id=" + context.getPackageName())));
