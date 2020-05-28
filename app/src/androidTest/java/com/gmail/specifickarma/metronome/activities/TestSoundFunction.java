@@ -17,7 +17,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @LargeTest
 @RunWith(AndroidJUnit4ClassRunner.class)
-public class testSoundFunction {
+public class TestSoundFunction {
 
     @Test
     public void verifySoundFunOnMinBPM() {
